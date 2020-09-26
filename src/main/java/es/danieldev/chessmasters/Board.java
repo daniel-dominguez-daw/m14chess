@@ -12,7 +12,16 @@ package es.danieldev.chessmasters;
 public class Board {
 	Piece[][] pieces = new Piece[8][8];
 
+	public Board() {
+		createBoard();
+	}
+
 	private void createBoard() {
+		for(int i = 0; i < pieces.length; i++) {
+			for(int j = 0; j < pieces[i].length; j++){
+				pieces[i][j] = new Piece("rook");
+			}
+		}
 
 	}
 }

@@ -8,18 +8,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+		<title>ChessMasters - Play Chess JDA</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ChessMasters - Play Chess</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ChessMasters - Play Chess JDA</title>
     </head>
     <body>
         <h1>ChessMasters</h1>
 		<div id="app"></div>
     </body>
-	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
-	<script type="text/babel" src="js/app.js">
+	<script src="js/app.js">
 	</script>
-
 </html>

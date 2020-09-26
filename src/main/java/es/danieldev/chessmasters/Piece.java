@@ -10,5 +10,9 @@ package es.danieldev.chessmasters;
  * @author zebnat
  */
 public class Piece {
+	String codeName;
+	public Piece(String name) {
+		codeName = name;
+	}
 	
 }
