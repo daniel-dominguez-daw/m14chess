@@ -5,6 +5,9 @@
  */
 package es.danieldev.chessmasters;
 
+import es.danieldev.chessmasters.pieces.Pawn;
+import es.danieldev.chessmasters.pieces.Piece;
+
 /**
  *
  * @author zebnat
@@ -17,11 +20,23 @@ public class Board {
 	}
 
 	private void createBoard() {
-		for(int i = 0; i < pieces.length; i++) {
-			for(int j = 0; j < pieces[i].length; j++){
-				pieces[i][j] = new Piece("rook");
-			}
+		// @todo create black mix pieces
+
+		// create black pawns
+		for(int i = 0; i < 8; i++) {
+			putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(1, i));
 		}
 
+		// create white pawns
+		for(int i = 0; i < 8; i++) {
+			putPiece(new Pawn(Piece.Color.WHITE), new BoardSlot(6, i));
+		}
+
+		// @todo create white mix pieces
+	}
+
+	private void putPiece(Piece p, BoardSlot slot) {
+		pieces[slot.getRow()][slot.getCol()] = p;
+		p.setSlot(slot);
 	}
 }
