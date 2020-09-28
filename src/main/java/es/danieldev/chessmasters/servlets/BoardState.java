@@ -35,17 +35,18 @@ public class BoardState extends HttpServlet {
 
 		ServletContext context = getServletContext();
 		Object b = context.getAttribute("gameboard");
-		if(b == null)
+		if(b == null) {
 			b = new Board();
 			context.setAttribute("gameboard", b);
+		}
 		
 		b = (Board) b;
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String test = new Gson().toJson(b);
+		String boardState = new Gson().toJson(b);
 
 		try (PrintWriter out = response.getWriter()) {
-			out.print(test);
+			out.print(boardState);
 			out.flush();
 		}
 	}
