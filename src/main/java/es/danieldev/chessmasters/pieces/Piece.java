@@ -19,4 +19,8 @@ public abstract class Piece {
 	public abstract List<BoardSlot> possibleMoves(Board b);
 
 	public abstract String toCodeName();
+
+	public void setSlot(BoardSlot s) {
+		this.slot = s;
+	}
 }
