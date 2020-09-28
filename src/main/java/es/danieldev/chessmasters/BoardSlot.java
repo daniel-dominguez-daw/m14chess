@@ -9,13 +9,21 @@ package es.danieldev.chessmasters;
  *
  * @author zebnat
  */
-public class BoardSlot {
-	private int row;
-	private int col;
+public final class BoardSlot {
+	private final int row;
+	private final int col;
 	
 	public BoardSlot(int row, int col) {
 		this.row = safeCoordinate(row);
 		this.col = safeCoordinate(col);
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getCol() {
+		return col;
 	}
 
 	private int safeCoordinate(int coordinate) {
