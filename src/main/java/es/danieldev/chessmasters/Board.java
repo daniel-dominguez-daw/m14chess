@@ -22,17 +22,24 @@ public class Board {
 	private void createBoard() {
 		// @todo create black mix pieces
 
+		createBlackPawns();
+		createWhitePawns();
+
+		// @todo create white mix pieces
+	}
+
+	private void createBlackPawns() {
 		// create black pawns
 		for(int i = 0; i < 8; i++) {
 			putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(1, i));
 		}
+	}
 
+	private void createWhitePawns() {
 		// create white pawns
 		for(int i = 0; i < 8; i++) {
 			putPiece(new Pawn(Piece.Color.WHITE), new BoardSlot(6, i));
 		}
-
-		// @todo create white mix pieces
 	}
 
 	private void putPiece(Piece p, BoardSlot slot) {
