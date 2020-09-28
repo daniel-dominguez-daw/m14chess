@@ -17,15 +17,11 @@ public final class Pawn extends Piece {
 
 	public Pawn(Color color) {
 		super(color);
+		codeName = Piece.CodeName.PAWN;
 	}
 
 	@Override
 	public List<BoardSlot> possibleMoves(Board b) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public String toCodeName() {
-		return "pawn";
 	}
 }

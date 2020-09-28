@@ -19,7 +19,17 @@ public abstract class Piece {
 		BLACK
 	}
 
+	public enum CodeName {
+		PAWN,
+		ROOK,
+		KNIGHT,
+		BISHOP,
+		KING,
+		QUEEN
+	}
+
 	private Color pieceColor;
+	protected CodeName codeName;
 	private BoardSlot slot;
 
 	public Piece(Color color) {
@@ -27,8 +37,6 @@ public abstract class Piece {
 	}
 
 	public abstract List<BoardSlot> possibleMoves(Board b);
-
-	public abstract String toCodeName();
 
 	public void setSlot(BoardSlot s) {
 		this.slot = s;
