@@ -13,24 +13,19 @@ import java.util.List;
  *
  * @author zebnat
  */
-public abstract class Piece {
-	public enum Color {
-		WHITE,
-		BLACK
+public final class Pawn extends Piece {
+
+	public Pawn(Color color) {
+		super(color);
 	}
 
-	private Color pieceColor;
-	private BoardSlot slot;
-
-	public Piece(Color color) {
-		pieceColor = color;
+	@Override
+	public List<BoardSlot> possibleMoves(Board b) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
-	public abstract List<BoardSlot> possibleMoves(Board b);
-
-	public abstract String toCodeName();
-
-	public void setSlot(BoardSlot s) {
-		this.slot = s;
+	@Override
+	public String toCodeName() {
+		return "pawn";
 	}
 }
