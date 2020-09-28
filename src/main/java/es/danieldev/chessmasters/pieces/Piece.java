@@ -28,12 +28,12 @@ public abstract class Piece {
 		QUEEN
 	}
 
-	private Color pieceColor;
+	private Color color;
 	protected CodeName codeName;
 	private BoardSlot slot;
 
 	public Piece(Color color) {
-		pieceColor = color;
+		this.color = color;
 	}
 
 	public abstract List<BoardSlot> possibleMoves(Board b);
