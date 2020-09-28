@@ -14,14 +14,16 @@ import java.util.regex.Pattern;
  * @author zebnat
  */
 public class ChessCoordinates {
-	private String row;
-	private String col;
+	private final String row;
+	private final String col;
 
 	public ChessCoordinates(String row, String column) throws IllegalArgumentException {
 		if(!allowedColumnLetter(column) || !allowedRowNumber(row)) {
 			throw new IllegalArgumentException("Cannot create coordinates with row <" + row + "> col <"+ column + ">");
 
 		}
+		this.row = row;
+		this.col = column;
 	}
 
 	private boolean allowedColumnLetter(String columnLetter) {
