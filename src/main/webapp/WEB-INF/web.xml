@@ -10,11 +10,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>BoardState</servlet-name>
-        <url-pattern>/board-state</url-pattern>
+        <url-pattern>/api/board-state</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-</web-app>
+</web-app> 

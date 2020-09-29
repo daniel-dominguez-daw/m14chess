@@ -1,24 +1,29 @@
 'use strict'
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import './App.css';
+import Board from './Board.js';
+import { css } from 'glamor';
+
+let ruleApp = css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+});
 
 const App = function() {
-    var [jscontent, setJsContent] = useState("");
-
-	var b = 0;
+    var [board, setBoard] = useState([]);
 
     useEffect(() => {
-        axios.get('js/app.js')
+        axios.get('api/board-state')
         .then((r) => {
-            setJsContent(r.data);
+            setBoard(r.data.pieces);
+            console.log(r.data.pieces);
         });
     }, []);
 
 	return (
-        <div id="app">
-            <div>Hello world {b}</div>
-            <div style={{background: "orange"}}>{jscontent}</div>
+        <div {...ruleApp}>
+            <Board pieces={board}/>
         </div>
 	);
 }
