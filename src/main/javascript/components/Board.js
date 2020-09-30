@@ -1,9 +1,29 @@
 'use strict'
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { css, select as $ } from 'glamor';
 import { xs, sm, md } from '../utils/mediaquery.js';
-import Cell from './Cell.js';
+import BoardRow from './BoardRow.js';
 
+const Board = function(props) {
+    const { pieces } = props;
+    if (pieces.length == 0) return null;
+
+    let boardGrid = pieces.map(
+        (columns, rowIndex) => <BoardRow 
+                        key={rowIndex} 
+                        rowIndex={rowIndex}
+                        columns={columns} />);
+
+    return (
+        <div {...ruleBoard}>
+        {boardGrid}
+        </div>
+    );
+}
+
+export default Board;
+
+// CSS RULES
 let ruleBoard = css({
     border: '2px solid black',
     display: 'flex',
@@ -24,38 +44,3 @@ let ruleBoard = css({
     })
 );
 
-let rowRule = css({
-    background: 'green',
-    display: 'flex',
-    flexDirection: 'row'
-});
-
-const Board = function(props) {
-    if (props.pieces.length == 0) return null;
-
-    console.log(props);
-
-    let boardGrid = props.pieces.map((row, index) => {
-        let cells = row.map((column, iCol) => <Cell key={iCol}
-                        cellColor={(index % 2 == 0 ? 
-                            (iCol % 2 == 0 ? 'WHITE' : 'BLACK') : 
-                            (iCol % 2 == 0 ? 'BLACK' : 'WHITE'))} 
-                        codeName={(column == null ? null : column.codeName)} 
-                        pieceColor={(column == null ? null : column.color)} />);
-
-        return (
-            <div {...rowRule} key={index}>
-                {cells}
-           </div>
-        );
-    });
-
-
-    return (
-        <div {...ruleBoard}>
-        {boardGrid}
-        </div>
-    );
-}
-
-export default Board;

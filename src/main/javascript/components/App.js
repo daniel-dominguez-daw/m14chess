@@ -4,12 +4,6 @@ import axios from 'axios';
 import Board from './Board.js';
 import { css } from 'glamor';
 
-let ruleApp = css({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-});
-
 const App = function() {
     var [board, setBoard] = useState([]);
 
@@ -29,3 +23,11 @@ const App = function() {
 }
 
 export default App;
+
+// CSS RULES
+let ruleApp = css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+});
+

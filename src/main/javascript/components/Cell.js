@@ -14,27 +14,26 @@ import knightWhite from './img/knight1.png';
 import bishopBlack from './img/bishop0.png';
 import bishopWhite from './img/bishop1.png';
 
-let ruleBgWhite = css({
-    background: '#fff'
-});
+const Cell = function(props) {
+    const { cellColor, pieceColor, codeName } = props;
 
-let ruleBgBlack = css({
-    background: 'brown'
-});
+    const cellStyle = (cellColor == 'BLACK' ? ruleBgBlack : ruleBgWhite);
 
-let ruleCell = css({
-    position: 'relative',
-    width: 'calc(100% / 8)',
-    '>img': {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%'
-    },
-    paddingBottom: 'calc(100% / 8)'
-});
+    const pieceContent = (pieceColor == null && codeName == null ? 
+        null : 
+        pieceRenderer(pieceColor, codeName));
 
+    return (
+        <div {...cellStyle} {...ruleCell}>
+            {pieceContent}
+        </div>
+    );
+
+}
+
+export default Cell;
+
+// Helper functions
 const pieceRenderer = function(color, type) {
     let piece;
     if (color == 'BLACK') {
@@ -56,21 +55,25 @@ const pieceRenderer = function(color, type) {
     )
 }
 
-const Cell = function(props) {
-    const { cellColor, pieceColor, codeName } = props;
+// CSS RULES
+let ruleBgWhite = css({
+    background: '#fff'
+});
 
-    const cellStyle = (cellColor == 'BLACK' ? ruleBgBlack : ruleBgWhite);
+let ruleBgBlack = css({
+    background: 'brown'
+});
 
-    const pieceContent = (pieceColor == null && codeName == null ? 
-        null : 
-        pieceRenderer(pieceColor, codeName));
+let ruleCell = css({
+    position: 'relative',
+    width: 'calc(100% / 8)',
+    '>img': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%'
+    },
+    paddingBottom: 'calc(100% / 8)'
+});
 
-    return (
-        <div {...cellStyle} {...ruleCell}>
-            {pieceContent}
-        </div>
-    );
-
-}
-
-export default Cell;
