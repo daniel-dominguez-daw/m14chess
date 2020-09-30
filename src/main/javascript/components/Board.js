@@ -1,56 +1,34 @@
 'use strict'
 import React, {useEffect, useState} from 'react';
-import { css } from 'glamor';
-import pawnBlack from './img/pawn0.png';
-import pawnWhite from './img/pawn1.png';
+import { css, select as $ } from 'glamor';
+import { xs, sm, md } from '../utils/mediaquery.js';
+import Cell from './Cell.js';
 
-let boardRule = css({
+let ruleBoard = css({
     border: '2px solid black',
     display: 'flex',
     flexDirection: 'column',
-    width: '50%'
-});
+    width: '60%'
+    },
+    $(xs, {
+        width: '90%'
+    }),
+    $(sm, {
+        width: '80%'
+    }),
+    $(md, {
+        width: '70%'
+    }),
+    $(md, {
+        width: '50%'
+    })
+);
 
 let rowRule = css({
     background: 'green',
-    height: 32,
     display: 'flex',
     flexDirection: 'row'
 });
-
-let backgroundWhite = css({
-    background: '#fff'
-});
-
-let backgroundBlack = css({
-    background: 'brown'
-});
-
-let ruleEmptyCell = css({
-    width: 32,
-    height: 32
-});
-
-const pieceRenderer = function(color, type) {
-    let piece;
-    if (color == 'BLACK') {
-        switch(type) {
-            case 'PAWN':
-                piece = pawnBlack;
-                break;
-        }
-    } else if(color == 'WHITE') {
-        switch(type) {
-            case 'PAWN':
-                piece = pawnWhite;
-                break;
-        }
-    }
-
-    return (
-        <img src={piece} />
-    )
-}
 
 const Board = function(props) {
     if (props.pieces.length == 0) return null;
@@ -58,34 +36,23 @@ const Board = function(props) {
     console.log(props);
 
     let boardGrid = props.pieces.map((row, index) => {
-        let cells = row.map((column, iCol) => {
-
-            let cellStyle;
-            if (index % 2 == 0) {
-                cellStyle = (iCol % 2 == 0 ? backgroundWhite : backgroundBlack);
-            } else {
-                cellStyle = (iCol % 2 == 0 ? backgroundBlack : backgroundWhite);
-            }
-
-            let pieceContent = (column == null ? <div {...ruleEmptyCell}></div> : pieceRenderer(column.color, column.codeName));
-
-            return (
-                <div key={iCol} {...cellStyle}>
-                    {pieceContent}
-                </div>
-            );
-        });
+        let cells = row.map((column, iCol) => <Cell key={iCol}
+                        cellColor={(index % 2 == 0 ? 
+                            (iCol % 2 == 0 ? 'WHITE' : 'BLACK') : 
+                            (iCol % 2 == 0 ? 'BLACK' : 'WHITE'))} 
+                        codeName={(column == null ? null : column.codeName)} 
+                        pieceColor={(column == null ? null : column.color)} />);
 
         return (
             <div {...rowRule} key={index}>
                 {cells}
-            </div>
+           </div>
         );
     });
 
 
     return (
-        <div {...boardRule}>
+        <div {...ruleBoard}>
         {boardGrid}
         </div>
     );
