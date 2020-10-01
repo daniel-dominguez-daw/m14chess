@@ -40,7 +40,7 @@ class Rook extends Piece {
     }
 
     renderImage() {
-        return (this.color == 'BLACK' ? rookBlack : rookwhite);
+        return (this.color == 'BLACK' ? rookBlack : rookWhite);
     }
 }
 
