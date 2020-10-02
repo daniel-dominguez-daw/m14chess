@@ -27,7 +27,8 @@ public class Board {
 	private void createBoard() {
 		// create black mix pieces
 		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 0));
-		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 1));
+		//putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 1));
+		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(2, 2));
 		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 2));
 		putPiece(new King(Piece.Color.BLACK), new BoardSlot(0, 3));
 		putPiece(new Queen(Piece.Color.BLACK), new BoardSlot(0, 4));

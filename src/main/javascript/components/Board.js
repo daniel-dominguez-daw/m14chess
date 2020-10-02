@@ -10,6 +10,7 @@ const Board = function(props) {
 
     let boardGrid = pieces.map(
         (columns, rowIndex) => <BoardRow 
+                        {...props}
                         key={rowIndex} 
                         rowIndex={rowIndex}
                         columns={columns} />);
@@ -25,7 +26,8 @@ export default Board;
 
 // CSS RULES
 let ruleBoard = css({
-    border: '2px solid black',
+    border: '8px solid #ad9807',
+    borderRadius: 3,
     display: 'flex',
     flexDirection: 'column',
     width: '60%'

@@ -7,17 +7,21 @@ import { css } from 'glamor';
 const App = function() {
     var [board, setBoard] = useState([]);
 
-    useEffect(() => {
+    const updateBoardHandler = () => {
         axios.get('api/board-state')
         .then((r) => {
             setBoard(r.data.pieces);
             console.log(r.data.pieces);
         });
+    };
+
+    useEffect(() => {
+        updateBoardHandler();
     }, []);
 
 	return (
         <div {...ruleApp}>
-            <Board pieces={board}/>
+            <Board pieces={board} updateBoardHandler={updateBoardHandler}/>
         </div>
 	);
 }

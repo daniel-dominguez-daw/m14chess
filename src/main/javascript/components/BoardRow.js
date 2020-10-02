@@ -7,6 +7,7 @@ const BoardRow = function(props) {
     const { columns, rowIndex } = props;
 
     let cells = columns.map((column, iCol) => <Cell key={iCol}
+                    highlight={iCol % 4 == 0 ? true : false}
                     cellColor={(rowIndex % 2 == 0 ? 
                         (iCol % 2 == 0 ? 'WHITE' : 'BLACK') : 
                         (iCol % 2 == 0 ? 'BLACK' : 'WHITE'))} 

@@ -14,7 +14,7 @@
         <title>ChessMasters - Play Chess JDA</title>
     </head>
     <body>
-        <h1>ChessMasters</h1>
+        <h1>JDA Chess</h1>
 		<div id="app"></div>
     </body>
 	<script src="js/app.js">

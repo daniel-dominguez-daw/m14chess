@@ -4,7 +4,7 @@ import { css } from 'glamor';
 import { Pawn, pieceRenderer } from '../utils/pieces.js';
 
 const Cell = function(props) {
-    const { cellColor, pieceColor, codeName } = props;
+    const { cellColor, pieceColor, codeName, highlight } = props;
 
     const cellStyle = (cellColor == 'BLACK' ? ruleBgBlack : ruleBgWhite);
 
@@ -12,8 +12,17 @@ const Cell = function(props) {
         null : 
         <img src={pieceRenderer(pieceColor, codeName)} />);
 
+    let incomingCellCss = ruleCell;
+    if (highlight) {
+        incomingCellCss = css(incomingCellCss, ruleCellSucessPosition);
+    }
+
+    if (null !== pieceContent) {
+        incomingCellCss = css(incomingCellCss, ruleCellGrab);
+    }
+
     return (
-        <div {...cellStyle} {...ruleCell}>
+        <div {...cellStyle} {...incomingCellCss} >
             {pieceContent}
         </div>
     );
@@ -41,6 +50,29 @@ let ruleCell = css({
         width: '100%',
         height: '100%'
     },
-    paddingBottom: 'calc(100% / 8)'
+    paddingBottom: 'calc(100% / 8)',
+    border: '1px solid #000'
 });
 
+let hightlightPulse = css.keyframes('hpulse', {
+    '0%': {
+        background: '#24ca21'
+    },
+    '50%': {
+        background: '#5ee45c'
+    },
+    '100%': {
+        background: '#24ca21'
+    },
+});
+
+let ruleCellSucessPosition = css({
+    animation: `${hightlightPulse} 1s infinite`,
+    background: '#24ca21'
+});
+
+let ruleCellGrab = css({
+    ':hover' : {
+        cursor: 'grabbing'
+    }
+});
