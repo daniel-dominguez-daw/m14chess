@@ -22,6 +22,7 @@ public final class Pawn extends Piece {
 
 	@Override
 	public List<BoardSlot> possibleMoves(Board b) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tooavailable movementsls | Templates.
 	}
 }

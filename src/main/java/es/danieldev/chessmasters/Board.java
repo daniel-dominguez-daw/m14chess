@@ -12,6 +12,7 @@ import es.danieldev.chessmasters.pieces.Pawn;
 import es.danieldev.chessmasters.pieces.Piece;
 import es.danieldev.chessmasters.pieces.Queen;
 import es.danieldev.chessmasters.pieces.Rook;
+import java.util.List;
 
 /**
  *
@@ -27,8 +28,7 @@ public class Board {
 	private void createBoard() {
 		// create black mix pieces
 		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 0));
-		//putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 1));
-		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(2, 2));
+		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 1));
 		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 2));
 		putPiece(new King(Piece.Color.BLACK), new BoardSlot(0, 3));
 		putPiece(new Queen(Piece.Color.BLACK), new BoardSlot(0, 4));
@@ -68,5 +68,13 @@ public class Board {
 	private void putPiece(Piece p, BoardSlot slot) {
 		pieces[slot.getRow()][slot.getCol()] = p;
 		p.setSlot(slot);
+	}
+
+	public List<BoardSlot> calculateAvailableMovements(BoardSlot from) {
+		Piece pieceToMove = pieces[from.getRow()][from.getCol()];
+		if(null == pieceToMove)
+			return null;
+		
+		return pieceToMove.possibleMoves(this);
 	}
 }

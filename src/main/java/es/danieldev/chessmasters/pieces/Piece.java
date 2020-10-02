@@ -14,6 +14,7 @@ import java.util.List;
  * @author zebnat
  */
 public abstract class Piece {
+
 	public enum Color {
 		WHITE,
 		BLACK

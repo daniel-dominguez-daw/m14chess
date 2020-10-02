@@ -8,13 +8,21 @@
             <param-value>asdf</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>AvailableMovements</servlet-name>
+        <servlet-class>es.danieldev.chessmasters.servlets.AvailableMovements</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BoardState</servlet-name>
         <url-pattern>/api/board-state</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AvailableMovements</servlet-name>
+        <url-pattern>/api/available-movements</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-</web-app> 
+</web-app>

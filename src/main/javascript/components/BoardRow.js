@@ -12,7 +12,9 @@ const BoardRow = function(props) {
                         (iCol % 2 == 0 ? 'WHITE' : 'BLACK') : 
                         (iCol % 2 == 0 ? 'BLACK' : 'WHITE'))} 
                     codeName={(column == null ? null : column.codeName)} 
-                    pieceColor={(column == null ? null : column.color)} />);
+                    pieceColor={(column == null ? null : column.color)} 
+                    position={{row: rowIndex, col: iCol}}
+                    />);
 
     return (
         <div {...ruleBoardRow} >
