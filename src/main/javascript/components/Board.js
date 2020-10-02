@@ -1,14 +1,26 @@
 'use strict'
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { css, select as $ } from 'glamor';
 import { xs, sm, md } from '../utils/mediaquery.js';
 import BoardRow from './BoardRow.js';
+import axios from 'axios';
 
 const Board = function(props) {
-    const { pieces } = props;
-    if (pieces.length == 0) return null;
+    var [board, setBoard] = useState([]);
 
-    let boardGrid = pieces.map(
+    const updateBoardHandler = () => {
+        axios.get('api/board-state')
+        .then((r) => {
+            setBoard(r.data.pieces);
+            console.log(r.data.pieces);
+        });
+    };
+
+    useEffect(() => {
+        updateBoardHandler();
+    }, []);
+
+    let boardGrid = board.map(
         (columns, rowIndex) => <BoardRow 
                         {...props}
                         key={rowIndex} 
