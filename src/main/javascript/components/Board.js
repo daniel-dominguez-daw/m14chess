@@ -7,6 +7,9 @@ import axios from 'axios';
 
 const Board = function(props) {
     var [board, setBoard] = useState([]);
+    var [movingPiece, setMovingPiece] = useState(false);
+    var [grabbedPiecePos, setGrabbedPiecePos] = useState({row: null, col: null});
+    var [hightlightCells, setHighlightCells] = useState([]);
 
     const updateBoardHandler = () => {
         axios.get('api/board-state')
@@ -16,16 +19,39 @@ const Board = function(props) {
         });
     };
 
+    const handleCellClick = (cellPos) => {
+        return function() {
+            if (movingPiece) {
+
+            } else {
+                console.log(cellPos);
+                setMovingPiece(true);
+                setGrabbedPiecePos(cellPos);
+
+                axios.get('api/available-movements', {
+                    params: cellPos
+                })
+                .then((r) => {
+                    console.log(r.data);
+                    setHighlightCells(r.data);
+                });
+            }
+        }
+    };
+
     useEffect(() => {
         updateBoardHandler();
     }, []);
 
     let boardGrid = board.map(
         (columns, rowIndex) => <BoardRow 
+                        handleCellClick={handleCellClick}
                         {...props}
                         key={rowIndex} 
                         rowIndex={rowIndex}
-                        columns={columns} />);
+                        columns={columns} 
+                        hightlightCells={hightlightCells}
+        />);
 
     return (
         <div {...ruleBoard}>

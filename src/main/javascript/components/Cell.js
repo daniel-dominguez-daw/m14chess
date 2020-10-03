@@ -4,7 +4,7 @@ import { css } from 'glamor';
 import { Pawn, pieceRenderer } from '../utils/pieces.js';
 
 const Cell = function(props) {
-    const { cellColor, pieceColor, codeName, highlight } = props;
+    const { cellColor, pieceColor, codeName, highlight, position, handleCellClick } = props;
 
     const cellStyle = (cellColor == 'BLACK' ? ruleBgBlack : ruleBgWhite);
 
@@ -22,7 +22,7 @@ const Cell = function(props) {
     }
 
     return (
-        <div {...cellStyle} {...incomingCellCss} >
+        <div {...cellStyle} {...incomingCellCss} onClick={handleCellClick(position)}>
             {pieceContent}
         </div>
     );
