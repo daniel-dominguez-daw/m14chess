@@ -1,9 +1,11 @@
 'use strict'
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { css, select as $ } from 'glamor';
 import { xs, sm, md } from '../utils/mediaquery.js';
 import BoardRow from './BoardRow.js';
 import axios from 'axios';
+
+import {LoadingContext} from './App.js';
 
 const Board = function(props) {
     var [board, setBoard] = useState([]);
@@ -11,32 +13,47 @@ const Board = function(props) {
     var [grabbedPiecePos, setGrabbedPiecePos] = useState({row: null, col: null});
     var [hightlightCells, setHighlightCells] = useState([]);
 
-    const updateBoardHandler = () => {
-        axios.get('api/board-state')
-        .then((r) => {
-            setBoard(r.data.pieces);
-            console.log(r.data.pieces);
+    const loadingC = useContext(LoadingContext);
+
+    const updateBoardHandler = loadingC.loadingDataHandler(() => {
+        return new Promise((res, rej) => {
+            axios.get('api/board-state')
+            .then((r) => {
+                setBoard(r.data.pieces);
+                console.log(r.data.pieces);
+                res(true);
+            });
         });
-    };
+    });
 
     const handleCellClick = (cellPos) => {
-        return function() {
-            if (movingPiece) {
+        return loadingC.loadingDataHandler(() => {
+            return new Promise((res, rej) => {
+                if (movingPiece) {
+                    // @todo call to api post api/move
+                    res(true);
+                    // on success piece movement
+                    setHighlightCells([]);
+                    updateBoardHandler();
+                    // on error reject promise
+                    // rej(err);
+                    setMovingPiece(false);
+                } else {
+                    console.log(cellPos);
+                    setMovingPiece(true);
+                    setGrabbedPiecePos(cellPos);
 
-            } else {
-                console.log(cellPos);
-                setMovingPiece(true);
-                setGrabbedPiecePos(cellPos);
-
-                axios.get('api/available-movements', {
-                    params: cellPos
-                })
-                .then((r) => {
-                    console.log(r.data);
-                    setHighlightCells(r.data);
-                });
-            }
-        }
+                    axios.get('api/available-movements', {
+                        params: cellPos
+                    })
+                    .then((r) => {
+                        console.log(r.data);
+                        setHighlightCells(r.data);
+                        res(true);
+                    });
+                }
+            });
+        });
     };
 
     useEffect(() => {
