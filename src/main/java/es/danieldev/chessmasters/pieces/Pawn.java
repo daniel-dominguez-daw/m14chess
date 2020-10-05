@@ -7,6 +7,7 @@ package es.danieldev.chessmasters.pieces;
 
 import es.danieldev.chessmasters.Board;
 import es.danieldev.chessmasters.BoardSlot;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,10 @@ public final class Pawn extends Piece {
 
 	@Override
 	public List<BoardSlot> possibleMoves(Board b) {
+		List<BoardSlot> l = new ArrayList<>();
+		l.add(new BoardSlot(5, 6));
+		l.add(new BoardSlot(6, 7));
 
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tooavailable movementsls | Templates.
+		return l;
 	}
 }

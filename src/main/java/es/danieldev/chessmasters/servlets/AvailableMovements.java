@@ -8,9 +8,11 @@ package es.danieldev.chessmasters.servlets;
 import com.google.gson.Gson;
 import es.danieldev.chessmasters.Board;
 import es.danieldev.chessmasters.BoardSlot;
+import es.danieldev.chessmasters.pieces.Piece;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -52,22 +54,38 @@ public class AvailableMovements extends HttpServlet {
 		processRequest(request, response);
 		
 		ServletContext context = getServletContext();
-		Object b = context.getAttribute("gameboard");
-		if(b == null) {
-			b = new Board();
-			context.setAttribute("gameboard", b);
+		Object o = context.getAttribute("gameboard");
+		if(o == null) {
+			o = new Board();
+			context.setAttribute("gameboard", o);
 		}
 		
-		b = (Board) b;
+		Board b = (Board) o;
 
 		int row = (int) Integer.parseInt(request.getParameter("row"));
 		int col = (int) Integer.parseInt(request.getParameter("col"));
 		BoardSlot slotFrom = new BoardSlot(row, col);
+		Piece p = b.getPiece(slotFrom);
 
-		// @todo ask for the piece to calculate the possible slots
-		List<BoardSlot> slots = new ArrayList<>();
-		slots.add(new BoardSlot(4,3));
-		slots.add(new BoardSlot(6,6));
+		// @todo handle out of bounds error (trying to get a piece out of board)
+		if (null == p) {
+			// @todo refactor this into ApiError class
+			response.setStatus(406);// 406 Not Acceptable
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			HashMap<String, String> map = new HashMap<>();
+			map.put("code", "406");
+			map.put("error", "Piece not found in that slot");
+			String json = new Gson().toJson(map);
+
+			try (PrintWriter out = response.getWriter()) {
+				out.print(json);
+				out.flush();
+			}
+			return;
+		}
+
+		final List<BoardSlot> slots = p.possibleMoves(b);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

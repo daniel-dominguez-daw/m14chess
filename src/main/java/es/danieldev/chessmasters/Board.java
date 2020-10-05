@@ -19,7 +19,7 @@ import java.util.List;
  * @author zebnat
  */
 public class Board {
-	Piece[][] pieces = new Piece[8][8];
+	private final Piece[][] pieces = new Piece[8][8];
 
 	public Board() {
 		createBoard();
@@ -76,5 +76,9 @@ public class Board {
 			return null;
 		
 		return pieceToMove.possibleMoves(this);
+	}
+
+	public Piece getPiece(BoardSlot slot) {
+		return pieces[slot.getRow()][slot.getCol()];
 	}
 }
