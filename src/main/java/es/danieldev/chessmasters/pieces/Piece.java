@@ -29,7 +29,7 @@ public abstract class Piece {
 		QUEEN
 	}
 
-	private Color color;
+	protected Color color;
 	protected CodeName codeName;
 	private BoardSlot slot;
 
@@ -38,6 +38,10 @@ public abstract class Piece {
 	}
 
 	public abstract List<BoardSlot> possibleMoves(Board b);
+
+	public BoardSlot getSlot() {
+		return slot;
+	}
 
 	public void setSlot(BoardSlot s) {
 		this.slot = s;

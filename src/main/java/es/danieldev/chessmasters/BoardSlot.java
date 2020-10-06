@@ -13,9 +13,11 @@ public final class BoardSlot {
 	private final int row;
 	private final int col;
 	
-	public BoardSlot(int row, int col) {
-		this.row = safeCoordinate(row);
-		this.col = safeCoordinate(col);
+	public BoardSlot(int row, int col) throws OutOfBoardBoundsException {
+		safeCoordinate(row);
+		safeCoordinate(col);
+		this.row = row;
+		this.col = col;
 	}
 
 	public int getRow() {
@@ -26,14 +28,12 @@ public final class BoardSlot {
 		return col;
 	}
 
-	private int safeCoordinate(int coordinate) {
-		if (coordinate < 0) {
-			return 0;
-		} else if(coordinate > 7) {
-			return 7;
+	private void safeCoordinate(int coordinate) throws OutOfBoardBoundsException {
+		if(coordinate < 0 || coordinate > 7) {
+			throw new OutOfBoardBoundsException(
+					"Coordinates out of bounds.", 
+					new Exception());
 		}
-
-		return coordinate;
 	}
 
 	public ChessCoordinates toChessCoordinates() {

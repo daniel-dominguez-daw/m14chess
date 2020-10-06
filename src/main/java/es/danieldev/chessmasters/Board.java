@@ -38,6 +38,10 @@ public class Board {
 
 		createBlackPawns();
 
+		// testing purposes block
+		putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(5, 4));
+		// end testing
+
 		createWhitePawns();
 
 		// create white mix pieces
