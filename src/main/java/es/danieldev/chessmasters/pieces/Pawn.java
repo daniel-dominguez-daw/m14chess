@@ -25,51 +25,68 @@ public final class Pawn extends Piece {
 	@Override
 	public List<BoardSlot> possibleMoves(Board b) {
 		int forward = (color == Piece.Color.BLACK ? 1 : -1);
+		Color enemyColor = (color == Piece.Color.BLACK ? 
+				Piece.Color.WHITE :
+				Piece.Color.BLACK);
+
 		BoardSlot pieceSlot = getSlot();
 
 		List<BoardSlot> l = new ArrayList<>();
 
-		// Can move 2 cells when starting
-		if((color == Piece.Color.BLACK && pieceSlot.getRow() == 1) || 
-				color == Piece.Color.WHITE && pieceSlot.getRow() == 6) {
-
-			BoardSlot startingMovingTwo = new BoardSlot(
-			pieceSlot.getRow() + forward*2, 
-			pieceSlot.getCol());
-
-			l.add(startingMovingTwo);
-			
-			// @todo check if there is a piece or not in that slot
-		}
 
 		// move forward slot position
-		try {
-			BoardSlot forwardSlot = new BoardSlot(
-					pieceSlot.getRow() + forward, 
-					pieceSlot.getCol());
+		BoardSlot forwardSlot = new BoardSlot(
+				pieceSlot.getRow() + forward, 
+				pieceSlot.getCol());
+
+		if(! b.isOutOfBounds(forwardSlot) && b.getPiece(forwardSlot) == null) {
 			l.add(forwardSlot);
-		} catch(OutOfBoardBoundsException e) {
+
+			// Can move 2 cells when starting
+			if((color == Piece.Color.BLACK && pieceSlot.getRow() == 1) || 
+					color == Piece.Color.WHITE && pieceSlot.getRow() == 6) {
+
+				BoardSlot startingMovingTwo = new BoardSlot(
+				pieceSlot.getRow() + forward*2, 
+				pieceSlot.getCol());
+
+
+				if(b.getPiece(startingMovingTwo) == null)
+					l.add(startingMovingTwo);
+				
+			}
 		}
 
 		// move diagonal if enemy piece there
-		/*
 		Piece pieceDiagonalOne;
 		Piece pieceDiagonalTwo;
-		try {
-			BoardSlot diagonalOne = new BoardSlot(
-					pieceSlot.getRow() + forward,
-					pieceSlot.getCol() - 1);
-
-			Piece p = b.getPiece(diagonalOne);
-		} catch(OutOfBoardBoundsException e) {
-
-		}
+		BoardSlot diagonalOne = new BoardSlot(
+				pieceSlot.getRow() + forward,
+				pieceSlot.getCol() - 1);
 
 		BoardSlot diagonalTwo = new BoardSlot(
 				pieceSlot.getRow() + forward,
 				pieceSlot.getCol() + 1);
 
-		*/
+		if(! b.isOutOfBounds(diagonalOne)) {
+			pieceDiagonalOne = b.getPiece(diagonalOne);
+			if (pieceDiagonalOne != null) {
+				if (pieceDiagonalOne.color.equals(enemyColor)) {
+					// There is an enemy in this diagonal
+					l.add(diagonalOne);
+				}
+			}
+		}
+
+		if(! b.isOutOfBounds(diagonalTwo)) {
+			pieceDiagonalTwo = b.getPiece(diagonalTwo);
+			if (pieceDiagonalTwo != null) {
+				if (pieceDiagonalTwo.color.equals(enemyColor)) {
+					// There is an enemy in this diagonal
+					l.add(diagonalTwo);
+				}
+			}
+		}
 
 		return l;
 	}

@@ -26,33 +26,7 @@ public class Board {
 	}
 
 	private void createBoard() {
-		// create black mix pieces
-		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 0));
-		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 1));
-		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 2));
-		putPiece(new King(Piece.Color.BLACK), new BoardSlot(0, 3));
-		putPiece(new Queen(Piece.Color.BLACK), new BoardSlot(0, 4));
-		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 5));
-		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 6));
-		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 7));
-
-		createBlackPawns();
-
-		// testing purposes block
-		putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(5, 4));
-		// end testing
-
-		createWhitePawns();
-
-		// create white mix pieces
-		putPiece(new Rook(Piece.Color.WHITE), new BoardSlot(7, 0));
-		putPiece(new Knight(Piece.Color.WHITE), new BoardSlot(7, 1));
-		putPiece(new Bishop(Piece.Color.WHITE), new BoardSlot(7, 2));
-		putPiece(new King(Piece.Color.WHITE), new BoardSlot(7, 3));
-		putPiece(new Queen(Piece.Color.WHITE), new BoardSlot(7, 4));
-		putPiece(new Bishop(Piece.Color.WHITE), new BoardSlot(7, 5));
-		putPiece(new Knight(Piece.Color.WHITE), new BoardSlot(7, 6));
-		putPiece(new Rook(Piece.Color.WHITE), new BoardSlot(7, 7));
+		setupPawnTestingField();
 	}
 
 	private void createBlackPawns() {
@@ -84,5 +58,78 @@ public class Board {
 
 	public Piece getPiece(BoardSlot slot) {
 		return pieces[slot.getRow()][slot.getCol()];
+	}
+
+	public boolean isOutOfBounds(BoardSlot slot) {
+		int x = slot.getRow();
+		int y = slot.getCol();
+		if (x < 0 || x > 7)
+			return true;
+		if (y < 0 || y > 7)
+			return true;
+
+		return false;
+	}
+
+	private void setupStartField() {
+		// create black mix pieces
+		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 0));
+		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 1));
+		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 2));
+		putPiece(new King(Piece.Color.BLACK), new BoardSlot(0, 3));
+		putPiece(new Queen(Piece.Color.BLACK), new BoardSlot(0, 4));
+		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 5));
+		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 6));
+		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 7));
+
+		createBlackPawns();
+
+		createWhitePawns();
+
+		// create white mix pieces
+		putPiece(new Rook(Piece.Color.WHITE), new BoardSlot(7, 0));
+		putPiece(new Knight(Piece.Color.WHITE), new BoardSlot(7, 1));
+		putPiece(new Bishop(Piece.Color.WHITE), new BoardSlot(7, 2));
+		putPiece(new King(Piece.Color.WHITE), new BoardSlot(7, 3));
+		putPiece(new Queen(Piece.Color.WHITE), new BoardSlot(7, 4));
+		putPiece(new Bishop(Piece.Color.WHITE), new BoardSlot(7, 5));
+		putPiece(new Knight(Piece.Color.WHITE), new BoardSlot(7, 6));
+		putPiece(new Rook(Piece.Color.WHITE), new BoardSlot(7, 7));
+
+	}
+
+	private void setupPawnTestingField(){
+		// create black mix pieces
+		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 0));
+		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 1));
+		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 2));
+		putPiece(new King(Piece.Color.BLACK), new BoardSlot(0, 3));
+		putPiece(new Queen(Piece.Color.BLACK), new BoardSlot(0, 4));
+		putPiece(new Bishop(Piece.Color.BLACK), new BoardSlot(0, 5));
+		putPiece(new Knight(Piece.Color.BLACK), new BoardSlot(0, 6));
+		putPiece(new Rook(Piece.Color.BLACK), new BoardSlot(0, 7));
+
+		createBlackPawns();
+
+		// testing purposes block
+		putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(2, 3));
+		putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(3, 3));
+		putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(5, 4));
+		putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(5, 4));
+		putPiece(new Pawn(Piece.Color.BLACK), new BoardSlot(5, 7));
+		putPiece(new Pawn(Piece.Color.WHITE), new BoardSlot(2, 1));
+		// end testing
+
+		createWhitePawns();
+
+		// create white mix pieces
+		putPiece(new Rook(Piece.Color.WHITE), new BoardSlot(7, 0));
+		putPiece(new Knight(Piece.Color.WHITE), new BoardSlot(7, 1));
+		putPiece(new Bishop(Piece.Color.WHITE), new BoardSlot(7, 2));
+		putPiece(new King(Piece.Color.WHITE), new BoardSlot(7, 3));
+		putPiece(new Queen(Piece.Color.WHITE), new BoardSlot(7, 4));
+		putPiece(new Bishop(Piece.Color.WHITE), new BoardSlot(7, 5));
+		putPiece(new Knight(Piece.Color.WHITE), new BoardSlot(7, 6));
+		putPiece(new Rook(Piece.Color.WHITE), new BoardSlot(7, 7));
 	}
 }

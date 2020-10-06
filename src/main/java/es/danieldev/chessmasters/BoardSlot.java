@@ -13,9 +13,11 @@ public final class BoardSlot {
 	private final int row;
 	private final int col;
 	
-	public BoardSlot(int row, int col) throws OutOfBoardBoundsException {
+	public BoardSlot(int row, int col) /*throws OutOfBoardBoundsException*/ {
+		/*
 		safeCoordinate(row);
 		safeCoordinate(col);
+		*/
 		this.row = row;
 		this.col = col;
 	}
