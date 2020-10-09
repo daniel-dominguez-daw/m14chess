@@ -7,6 +7,7 @@ package es.danieldev.chessmasters.pieces;
 
 import es.danieldev.chessmasters.Board;
 import es.danieldev.chessmasters.BoardSlot;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,37 @@ public class Rook extends Piece {
 
 	@Override
 	public List<BoardSlot> possibleMoves(Board b) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Color enemyColor = (color == Piece.Color.BLACK ? 
+				Piece.Color.WHITE :
+				Piece.Color.BLACK);
+		List<BoardSlot> possibleMoves = new ArrayList<>();
+
+		BoardSlot pieceSlot = getSlot();
+
+		// left side
+		Piece p;
+		BoardSlot slot;
+		int col = 0;
+		while(true) {
+			col--;
+			slot = new BoardSlot(
+					pieceSlot.getRow(), 
+					pieceSlot.getCol() + col);
+
+			if(b.isOutOfBounds(slot)) {
+				break;
+			}
+
+			p = b.getPiece(slot);
+
+			if (null == p || p.color.equals(enemyColor)) {
+				possibleMoves.add(slot);
+			} else {
+				break;
+			}
+		}
+
+		return possibleMoves;
 	}
 	
 }
