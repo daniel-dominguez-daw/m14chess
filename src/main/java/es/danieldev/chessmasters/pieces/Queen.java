@@ -7,6 +7,8 @@ package es.danieldev.chessmasters.pieces;
 
 import es.danieldev.chessmasters.Board;
 import es.danieldev.chessmasters.BoardSlot;
+import es.danieldev.chessmasters.pieces.LinearPathCalculator.Direction;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +24,32 @@ public class Queen extends Piece {
 
 	@Override
 	public List<BoardSlot> possibleMoves(Board b) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Color enemyColor = calcEnemyColor();
+		List<BoardSlot> possibleMoves = new ArrayList<>();
+
+		LinearPathCalculator calculator = new LinearPathCalculator(
+				b, getSlot(), enemyColor);
+
+		PathDirection[] directions = {
+			new PathDirection(Direction.STATIC, Direction.DESCENDING),
+			new PathDirection(Direction.STATIC, Direction.ASCENDING),
+			new PathDirection(Direction.DESCENDING, Direction.STATIC),
+			new PathDirection(Direction.ASCENDING, Direction.STATIC),
+			new PathDirection(Direction.ASCENDING, Direction.ASCENDING),
+			new PathDirection(Direction.DESCENDING, Direction.DESCENDING),
+			new PathDirection(Direction.DESCENDING, Direction.ASCENDING),
+			new PathDirection(Direction.ASCENDING, Direction.DESCENDING),
+		};
+
+		List<BoardSlot> slotDirections;
+		for (PathDirection path : directions) {
+			slotDirections = calculator.calculatePathLine(
+					path.getRowDirection(), path.getColDirection()
+			);
+			possibleMoves.addAll(slotDirections);
+		}
+
+		return possibleMoves;
 	}
 	
 }

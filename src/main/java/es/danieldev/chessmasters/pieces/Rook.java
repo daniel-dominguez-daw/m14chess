@@ -7,6 +7,7 @@ package es.danieldev.chessmasters.pieces;
 
 import es.danieldev.chessmasters.Board;
 import es.danieldev.chessmasters.BoardSlot;
+import es.danieldev.chessmasters.pieces.LinearPathCalculator.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,37 +24,27 @@ public class Rook extends Piece {
 
 	@Override
 	public List<BoardSlot> possibleMoves(Board b) {
-		Color enemyColor = (color == Piece.Color.BLACK ? 
-				Piece.Color.WHITE :
-				Piece.Color.BLACK);
+		Color enemyColor = calcEnemyColor();
 		List<BoardSlot> possibleMoves = new ArrayList<>();
 
-		BoardSlot pieceSlot = getSlot();
+		LinearPathCalculator calculator = new LinearPathCalculator(
+				b, getSlot(), enemyColor);
 
-		// left side
-		Piece p;
-		BoardSlot slot;
-		int col = 0;
-		while(true) {
-			col--;
-			slot = new BoardSlot(
-					pieceSlot.getRow(), 
-					pieceSlot.getCol() + col);
+		PathDirection[] directions = {
+			new PathDirection(Direction.STATIC, Direction.DESCENDING),
+			new PathDirection(Direction.STATIC, Direction.ASCENDING),
+			new PathDirection(Direction.DESCENDING, Direction.STATIC),
+			new PathDirection(Direction.ASCENDING, Direction.STATIC),
+		};
 
-			if(b.isOutOfBounds(slot)) {
-				break;
-			}
-
-			p = b.getPiece(slot);
-
-			if (null == p || p.color.equals(enemyColor)) {
-				possibleMoves.add(slot);
-			} else {
-				break;
-			}
+		List<BoardSlot> slotDirections;
+		for (PathDirection path : directions) {
+			slotDirections = calculator.calculatePathLine(
+					path.getRowDirection(), path.getColDirection()
+			);
+			possibleMoves.addAll(slotDirections);
 		}
 
 		return possibleMoves;
 	}
-	
 }

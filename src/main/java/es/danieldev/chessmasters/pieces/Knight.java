@@ -29,6 +29,28 @@ public class Knight extends Piece {
 		
 		List<BoardSlot> possibleSlots = new ArrayList<>();
 		BoardSlot pieceSlot = getSlot();
+
+		BoardSlot[] testSlots = {
+			new BoardSlot(pieceSlot.getRow() + 1, pieceSlot.getCol() - 2),
+			new BoardSlot(pieceSlot.getRow() - 1, pieceSlot.getCol() - 2),
+			new BoardSlot(pieceSlot.getRow() - 2, pieceSlot.getCol() - 1),
+			new BoardSlot(pieceSlot.getRow() - 2, pieceSlot.getCol() + 1),
+			new BoardSlot(pieceSlot.getRow() - 1, pieceSlot.getCol() + 2),
+			new BoardSlot(pieceSlot.getRow() + 1, pieceSlot.getCol() + 2),
+			new BoardSlot(pieceSlot.getRow() + 2, pieceSlot.getCol() - 1),
+			new BoardSlot(pieceSlot.getRow() + 2, pieceSlot.getCol() + 1),
+		};
+
+		for (BoardSlot sl : testSlots) {
+			if(! b.isOutOfBounds(sl)) {
+				Piece target = b.getPiece(sl);
+				if (null == target || target.color == enemyColor) {
+					possibleSlots.add(sl);
+				}
+			}
+		}
+
+		/*
 		BoardSlot leftDown = new BoardSlot(pieceSlot.getRow() + 1,
 							pieceSlot.getCol() - 2);
 
@@ -109,6 +131,7 @@ public class Knight extends Piece {
 				possibleSlots.add(downRight);
 			}
 		}
+*/
 
 		return possibleSlots;
 	}

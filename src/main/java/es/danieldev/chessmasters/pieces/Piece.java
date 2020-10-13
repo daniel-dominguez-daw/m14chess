@@ -46,4 +46,11 @@ public abstract class Piece {
 	public void setSlot(BoardSlot s) {
 		this.slot = s;
 	}
+
+	public Color calcEnemyColor() {
+		Color enemyColor = (color == Piece.Color.BLACK ? 
+				Piece.Color.WHITE :
+				Piece.Color.BLACK);
+		return enemyColor;
+	}
 }
