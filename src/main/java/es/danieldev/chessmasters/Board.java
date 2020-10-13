@@ -10,9 +10,11 @@ import es.danieldev.chessmasters.pieces.King;
 import es.danieldev.chessmasters.pieces.Knight;
 import es.danieldev.chessmasters.pieces.Pawn;
 import es.danieldev.chessmasters.pieces.Piece;
+import es.danieldev.chessmasters.pieces.Piece.Color;
 import es.danieldev.chessmasters.pieces.Queen;
 import es.danieldev.chessmasters.pieces.Rook;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -26,7 +28,8 @@ public class Board {
 	}
 
 	private void createBoard() {
-		setupKnightTestingField();
+		setupRandomBoard();
+		//setupKnightTestingField();
 		//setupKingTestingField();
 		//setupRookTestingField();
 		//setupBishopTestingField();
@@ -73,6 +76,55 @@ public class Board {
 			return true;
 
 		return false;
+	}
+
+	private void setupRandomBoard() {
+		int randomType;
+		Color[] colors = {
+			Color.BLACK,
+			Color.WHITE
+		};
+
+		Piece[] piecesBlack = {
+			new Rook(Piece.Color.BLACK),
+			new Bishop(Piece.Color.BLACK),
+			new Knight(Piece.Color.BLACK),
+			new Queen(Piece.Color.BLACK),
+			new King(Piece.Color.BLACK),
+			new Pawn(Piece.Color.BLACK)
+		};
+
+		Piece[] piecesWhite = {
+			new Rook(Piece.Color.WHITE),
+			new Bishop(Piece.Color.WHITE),
+			new Knight(Piece.Color.WHITE),
+			new Queen(Piece.Color.WHITE),
+			new King(Piece.Color.WHITE),
+			new Pawn(Piece.Color.WHITE)
+		};
+
+		Piece tmpPiece;
+		Color tmpColor;
+		Piece[] piecesChosen;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				tmpColor = colors[ThreadLocalRandom.current().nextInt(0, 1 + 1)];
+				if (tmpColor == Color.BLACK) {
+					piecesChosen = piecesBlack;
+				} else {
+					piecesChosen = piecesWhite;
+				}
+
+				randomType = ThreadLocalRandom.current().nextInt(0, 6 + 1);
+				if (randomType != 6) {
+					try {
+						putPiece((Piece) piecesChosen[randomType].clone(), new BoardSlot(i, j));
+					} catch(CloneNotSupportedException e) {
+						System.err.println("Clone error");
+					}
+				}
+			}
+		}
 	}
 
 	private void setupStartField() {

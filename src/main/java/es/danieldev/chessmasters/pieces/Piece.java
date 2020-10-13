@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author zebnat
  */
-public abstract class Piece {
+public abstract class Piece implements Cloneable {
 
 	public enum Color {
 		WHITE,
@@ -52,5 +52,9 @@ public abstract class Piece {
 				Piece.Color.WHITE :
 				Piece.Color.BLACK);
 		return enemyColor;
+	}
+
+	public Object clone() throws CloneNotSupportedException {
+		return (Piece) super.clone();
 	}
 }
