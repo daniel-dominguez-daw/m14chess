@@ -115,8 +115,8 @@ public class Board {
 					piecesChosen = piecesWhite;
 				}
 
-				randomType = ThreadLocalRandom.current().nextInt(0, 6 + 1);
-				if (randomType != 6) {
+				randomType = ThreadLocalRandom.current().nextInt(0, 15 + 1);
+				if (randomType < 6) {
 					try {
 						putPiece((Piece) piecesChosen[randomType].clone(), new BoardSlot(i, j));
 					} catch(CloneNotSupportedException e) {
