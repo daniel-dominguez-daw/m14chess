@@ -55,4 +55,20 @@ public final class BoardSlot {
 		String colLetter = Character.toString(letters[this.col]).toUpperCase();
 		return new ChessCoordinates(rowNumber, colLetter);
 	}
+
+	public String toString() {
+		return String.format("BoardSlot[row: %d, col: %d]", row, col);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof BoardSlot))
+			return false;
+
+		BoardSlot other = (BoardSlot)o;
+
+		return (row == other.row && col == other.col);
+	}
 }

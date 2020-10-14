@@ -55,6 +55,12 @@ public class Board {
 		p.setSlot(slot);
 	}
 
+	public void movePiece(Piece p, BoardSlot slotFrom, BoardSlot slotTo) {
+		// set current slot to null
+		pieces[slotFrom.getRow()][slotFrom.getCol()] = null;
+		putPiece(p, slotTo);
+	}
+
 	public List<BoardSlot> calculateAvailableMovements(BoardSlot from) {
 		Piece pieceToMove = pieces[from.getRow()][from.getCol()];
 		if(null == pieceToMove)

@@ -12,6 +12,10 @@
         <servlet-name>AvailableMovements</servlet-name>
         <servlet-class>es.danieldev.chessmasters.servlets.AvailableMovements</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MoveTo</servlet-name>
+        <servlet-class>es.danieldev.chessmasters.servlets.MoveTo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BoardState</servlet-name>
         <url-pattern>/api/board-state</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>AvailableMovements</servlet-name>
         <url-pattern>/api/available-movements</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MoveTo</servlet-name>
+        <url-pattern>/api/move-to</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
