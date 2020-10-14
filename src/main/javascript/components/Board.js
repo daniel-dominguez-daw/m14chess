@@ -29,18 +29,31 @@ const Board = function(props) {
     const handleCellClick = (cellPos) => {
         return loadingC.loadingDataHandler(() => {
             return new Promise((res, rej) => {
-                if (movingPiece) {
+                console.log("does this evne work?");
+                if (movingPiece !== false) {
+                    console.log("I have a piece to move:");
+                    console.log(movingPiece);
                     // @todo call to api post api/move
-                    res(true);
-                    // on success piece movement
-                    setHighlightCells([]);
-                    updateBoardHandler();
+                    const params = new URLSearchParams();
+                    params.append('rowFrom', movingPiece.row);
+                    params.append('rowTo', cellPos.row);
+                    params.append('colFrom', movingPiece.col);
+                    params.append('colTo', cellPos.col);
+
+                    axios.post('api/move-to', params)
+                    .then((r) => {
+                        setBoard(r.data.pieces);
+                        console.log(r.data.pieces);
+                        setHighlightCells([]);
+                        setMovingPiece(false);
+                        res(true);
+                    });
                     // on error reject promise
                     // rej(err);
-                    setMovingPiece(false);
                 } else {
+                    console.log("I want to move a piece");
                     console.log(cellPos);
-                    setMovingPiece(true);
+                    setMovingPiece(cellPos);
                     setGrabbedPiecePos(cellPos);
 
                     axios.get('api/available-movements', {
