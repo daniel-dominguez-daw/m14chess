@@ -20,8 +20,10 @@ const Board = function(props) {
             axios.get('api/board-state')
             .then((r) => {
                 setBoard(r.data.pieces);
-                console.log(r.data.pieces);
-                res(true);
+                res(r.data.pieces);
+            })
+            .catch((err) => {
+                rej(err);
             });
         });
     });
@@ -29,10 +31,7 @@ const Board = function(props) {
     const handleCellClick = (cellPos) => {
         return loadingC.loadingDataHandler(() => {
             return new Promise((res, rej) => {
-                console.log("does this evne work?");
                 if (movingPiece !== false) {
-                    console.log("I have a piece to move:");
-                    console.log(movingPiece);
                     // @todo call to api post api/move
                     const params = new URLSearchParams();
                     params.append('rowFrom', movingPiece.row);
@@ -43,16 +42,17 @@ const Board = function(props) {
                     axios.post('api/move-to', params)
                     .then((r) => {
                         setBoard(r.data.pieces);
-                        console.log(r.data.pieces);
                         setHighlightCells([]);
                         setMovingPiece(false);
                         res(true);
+                    })
+                    .catch((err) => {
+                        console.log("moveto error");
+                        console.log(err.response);
+                        rej(err);
                     });
-                    // on error reject promise
-                    // rej(err);
+
                 } else {
-                    console.log("I want to move a piece");
-                    console.log(cellPos);
                     setMovingPiece(cellPos);
                     setGrabbedPiecePos(cellPos);
 
@@ -60,7 +60,6 @@ const Board = function(props) {
                         params: cellPos
                     })
                     .then((r) => {
-                        console.log(r.data);
                         setHighlightCells(r.data);
                         res(true);
                     });
