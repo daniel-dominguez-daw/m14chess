@@ -5,7 +5,7 @@ import { xs, sm, md } from '../utils/mediaquery.js';
 import BoardRow from './BoardRow.js';
 import axios from 'axios';
 
-import {LoadingContext} from './App.js';
+import {ApiContext} from './App.js';
 
 const Board = function(props) {
     var [board, setBoard] = useState([]);
@@ -13,26 +13,23 @@ const Board = function(props) {
     var [grabbedPiecePos, setGrabbedPiecePos] = useState({row: null, col: null});
     var [hightlightCells, setHighlightCells] = useState([]);
 
-    const loadingC = useContext(LoadingContext);
+    const { registerApiCall } = useContext(ApiContext);
 
-    const updateBoardHandler = loadingC.loadingDataHandler(() => {
-        return new Promise((res, rej) => {
-            axios.get('api/board-state')
-            .then((r) => {
-                setBoard(r.data.pieces);
-                res(r.data.pieces);
-            })
-            .catch((err) => {
-                rej(err);
-            });
+    const updateBoardHandler = registerApiCall(() => new Promise((res, rej) => {
+        axios.get('api/board-state')
+        .then((r) => {
+            setBoard(r.data.pieces);
+            res(r.data.pieces);
+        })
+        .catch((err) => {
+            rej(err);
         });
-    });
+    }));
 
     const handleCellClick = (cellPos) => {
-        return loadingC.loadingDataHandler(() => {
-            return new Promise((res, rej) => {
+        return registerApiCall(() => 
+            new Promise((res, rej) => {
                 if (movingPiece !== false) {
-                    // @todo call to api post api/move
                     const params = new URLSearchParams();
                     params.append('rowFrom', movingPiece.row);
                     params.append('rowTo', cellPos.row);
@@ -64,8 +61,8 @@ const Board = function(props) {
                         res(true);
                     });
                 }
-            });
-        });
+            })
+        );
     };
 
     useEffect(() => {

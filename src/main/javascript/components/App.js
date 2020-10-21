@@ -1,60 +1,36 @@
 'use strict'
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { css } from 'glamor';
+// components
 import Board from './Board.js';
 import ErrorPanel from './ErrorPanel.js';
-import { css } from 'glamor';
-
 import Loading from './Loading.js';
+// hooks
+import useApi from '../hooks/useApi.js';
 
-const LoadingContext = React.createContext({
-    loadingState: false,
-    loadingDataHandler: () =>{}
+const ApiContext = React.createContext({
+    registerApiCall: () => {}
 });
 
 const App = function() {
-    var [loading, setLoading] = useState(false);
-    var [errorData, setErrorData] = useState(false);
-
-    const loadingDataHandler = function(apiHandlerFn) {
-        return function() {
-            if(!loading) {
-                setLoading(true);
-                setTimeout(() => {
-                    apiHandlerFn()
-                    .then(() => {
-                        setLoading(false);
-                    })
-                    .catch((err) => {
-                        if(err.response.data !== undefined) {
-                            setErrorData(err.response.data);
-                        }
-                        setLoading(false);
-                    });
-                }, 300);
-            }
-        }
-    };
-
-    const resetErrorHandler = () => {
-        setErrorData(false);
-        console.log("run resetErrorHandler");
-    };
+    // call to hook useApi and use his state and functions
+    var [loading, errorData, registerApiCall, resetErrorHandler ] = useApi();
 
 	return (
         <div {...ruleApp}>
             { errorData && <ErrorPanel data={errorData} resetErrorHandler={resetErrorHandler} /> }
             <Loading waitingRequest={loading}/>
-            <LoadingContext.Provider value={{loadingState: loading, loadingDataHandler: loadingDataHandler}}>
+            <ApiContext.Provider value={{registerApiCall}}>
                 <Board />
-            </LoadingContext.Provider>
+            </ApiContext.Provider>
         </div>
 	);
-}
+};
 
 export default App;
 
-export {LoadingContext};
+export {ApiContext};
 
 // CSS RULES
 let ruleApp = css({
