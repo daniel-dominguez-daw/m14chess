@@ -14,6 +14,31 @@ const Board = function(props) {
 
     const { registerApiCall } = useContext(ApiContext);
 
+    useEffect(() => {
+        if(hightlightCells.length > 0) {
+            document.onkeypress = (e) => {
+                if(e.key === " ") {
+                    e.preventDefault();
+                    setMovingPiece(false);
+                    setHighlightCells([]);
+                }
+            };
+        } else {
+            document.onkeypress = (e) => {
+                if(e.key === " ") {
+                    e.preventDefault();
+                }
+            };
+        }
+
+    }, [hightlightCells]);
+
+    // Safety effect, if board state changes, reset movingPiece state and piece highlighting
+    useEffect(() => {
+        setHighlightCells([]);
+        setMovingPiece(false);
+    }, [board]);
+
     const updateBoardHandler = registerApiCall(() => new Promise((res, rej) => {
         axios.get('api/board-state')
         .then((r) => {
@@ -29,6 +54,15 @@ const Board = function(props) {
         return registerApiCall(() => 
             new Promise((res, rej) => {
                 if (movingPiece !== false) {
+                    // When you click to the exact same piece you want to move, the movement mode reset
+                    if(samePos(movingPiece, cellPos)) {
+                        setMovingPiece(false);
+                        setHighlightCells([]);
+                        res(true);
+                        return;
+                    }
+
+                    // Preparing API Post params
                     const params = new URLSearchParams();
                     params.append('rowFrom', movingPiece.row);
                     params.append('rowTo', cellPos.row);
@@ -43,8 +77,6 @@ const Board = function(props) {
                         res(true);
                     })
                     .catch((err) => {
-                        console.log("moveto error");
-                        console.log(err.response);
                         rej(err);
                     });
 
@@ -100,6 +132,10 @@ const Board = function(props) {
 
 const cellIsEmpty = (cellPos, board) => {
     return (board[cellPos.row][cellPos.col] == null);
+};
+
+const samePos = (posA, posB) => {
+    return (posA.row == posB.row && posA.col == posB.col);
 };
 
 export default Board;
