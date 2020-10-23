@@ -10,7 +10,6 @@ import {ApiContext} from './App.js';
 const Board = function(props) {
     var [board, setBoard] = useState([]);
     var [movingPiece, setMovingPiece] = useState(false);
-    var [grabbedPiecePos, setGrabbedPiecePos] = useState({row: null, col: null});
     var [hightlightCells, setHighlightCells] = useState([]);
 
     const { registerApiCall } = useContext(ApiContext);
@@ -50,15 +49,28 @@ const Board = function(props) {
                     });
 
                 } else {
+                    // if no piece, don't do anything
+                    if (cellIsEmpty(cellPos, board)) {
+                        res(true);
+                        return;
+                    }
+
                     setMovingPiece(cellPos);
-                    setGrabbedPiecePos(cellPos);
 
                     axios.get('api/available-movements', {
                         params: cellPos
                     })
                     .then((r) => {
-                        setHighlightCells(r.data);
+                        // if there are no places to move, dont highlight and reset  movingPiece state
+                        if(r.data.length == 0) {
+                            setMovingPiece(false);
+                        } else {
+                            setHighlightCells(r.data);
+                        }
                         res(true);
+                    })
+                    .catch((err) => {
+                        rej(err);
                     });
                 }
             })
@@ -85,6 +97,10 @@ const Board = function(props) {
         </div>
     );
 }
+
+const cellIsEmpty = (cellPos, board) => {
+    return (board[cellPos.row][cellPos.col] == null);
+};
 
 export default Board;
 
