@@ -141,11 +141,20 @@ public class MoveTo extends HttpServlet {
 
 		// put piece in the proper slot
 		b.movePiece(pieceToMove, slotFrom, slotTo);
+
+		// check if that piece is in a transformable condition
+		HashMap<String, Object> jsonMap = new HashMap<>();
+		jsonMap.put("board", b);
+		if (pieceToMove.canTransform()) {
+			jsonMap.put("transformPiece", pieceToMove);
+		} else {
+			jsonMap.put("transformPiece", false);
+		}
 		
 		// return board state
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String json = new Gson().toJson(b);
+		String json = new Gson().toJson(jsonMap);
 
 		try (PrintWriter out = response.getWriter()) {
 			out.print(json);

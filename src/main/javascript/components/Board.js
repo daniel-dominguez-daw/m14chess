@@ -71,9 +71,14 @@ const Board = function(props) {
 
                     axios.post('api/move-to', params)
                     .then((r) => {
-                        setBoard(r.data.pieces);
+                        setBoard(r.data.board.pieces);
                         setHighlightCells([]);
                         setMovingPiece(false);
+
+                        // if servers responds with transform, then trigger UI
+                        if (r.data.transformPiece !== false) {
+                            alert("Transform!");
+                        }
                         res(true);
                     })
                     .catch((err) => {

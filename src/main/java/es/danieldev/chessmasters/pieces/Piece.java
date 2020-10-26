@@ -7,6 +7,7 @@ package es.danieldev.chessmasters.pieces;
 
 import es.danieldev.chessmasters.Board;
 import es.danieldev.chessmasters.BoardSlot;
+import es.danieldev.chessmasters.ChessCoordinates;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public abstract class Piece implements Cloneable {
 	protected Color color;
 	protected CodeName codeName;
 	private BoardSlot slot;
+	private ChessCoordinates coordinates;
 
 	public Piece(Color color) {
 		this.color = color;
@@ -45,6 +47,7 @@ public abstract class Piece implements Cloneable {
 
 	public void setSlot(BoardSlot s) {
 		this.slot = s;
+		coordinates = s.toChessCoordinates();
 	}
 
 	public Color calcEnemyColor() {
