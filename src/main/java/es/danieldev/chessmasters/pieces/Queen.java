@@ -51,5 +51,10 @@ public class Queen extends Piece {
 
 		return possibleMoves;
 	}
+
+	@Override
+	public boolean canTransform() {
+		return false;
+	}
 	
 }

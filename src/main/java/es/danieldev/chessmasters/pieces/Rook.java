@@ -47,4 +47,9 @@ public class Rook extends Piece {
 
 		return possibleMoves;
 	}
+
+	@Override
+	public boolean canTransform() {
+		return false;
+	}
 }

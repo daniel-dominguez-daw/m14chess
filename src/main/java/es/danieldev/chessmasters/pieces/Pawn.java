@@ -90,4 +90,25 @@ public final class Pawn extends Piece {
 
 		return l;
 	}
+
+	@Override
+	public boolean canTransform() {
+		if (color == Piece.Color.BLACK) {
+			// transform position should be row 7
+			if(inRowPosition(7)) {
+				return true;
+			}
+		} else if(color == Piece.Color.WHITE) {
+			// transform position should be row 0
+			if(inRowPosition(0)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean inRowPosition(int pos) {
+		return (getSlot().getRow() == pos);
+	}
 }

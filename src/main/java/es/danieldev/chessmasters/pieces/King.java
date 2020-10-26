@@ -59,5 +59,10 @@ public class King extends Piece {
 
 		return possibleSlots;
 	}
+
+	@Override
+	public boolean canTransform() {
+		return false;
+	}
 	
 }

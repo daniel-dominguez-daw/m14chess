@@ -54,6 +54,8 @@ public abstract class Piece implements Cloneable {
 		return enemyColor;
 	}
 
+	public abstract boolean canTransform();
+
 	public Object clone() throws CloneNotSupportedException {
 		return (Piece) super.clone();
 	}

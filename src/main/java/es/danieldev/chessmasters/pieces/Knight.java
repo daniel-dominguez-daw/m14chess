@@ -135,4 +135,9 @@ public class Knight extends Piece {
 
 		return possibleSlots;
 	}
+
+	@Override
+	public boolean canTransform() {
+		return false;
+	}
 }
