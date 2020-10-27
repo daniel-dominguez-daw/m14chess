@@ -130,7 +130,27 @@ const Board = function(props) {
 
     return (
         <div {...ruleBoard}>
-        {boardGrid}
+            <div {...css(ruleLettersNumbersShared, ruleVerticalNumbers)}>
+                <span>8</span>
+                <span>7</span>
+                <span>6</span>
+                <span>5</span>
+                <span>4</span>
+                <span>3</span>
+                <span>2</span>
+                <span>1</span>
+            </div>
+            <div {...css(ruleLettersNumbersShared, ruleHorizontalLetters)}>
+                <span>a</span>
+                <span>b</span>
+                <span>c</span>
+                <span>d</span>
+                <span>e</span>
+                <span>f</span>
+                <span>g</span>
+                <span>h</span>
+            </div>
+            {boardGrid}
         </div>
     );
 }
@@ -146,9 +166,13 @@ const samePos = (posA, posB) => {
 export default Board;
 
 // CSS RULES
+const borderColor = '#ad9807';
 let ruleBoard = css({
-    border: '8px solid #ad9807',
-    borderRadius: 3,
+    borderStyle: 'solid',
+    borderWidth: '24px 16px 24px 16px',
+    borderColor: borderColor,
+    position: 'relative',
+    borderRadius: 20,
     display: 'flex',
     flexDirection: 'column',
     width: '60%'
@@ -167,3 +191,37 @@ let ruleBoard = css({
     })
 );
 
+let ruleLettersNumbersShared = css({
+    background: borderColor,
+    color: '#605300',
+    display: 'flex',
+    position: 'absolute',
+    fontWeight: 'bold'
+});
+
+let ruleHorizontalLetters = css({
+    padding: '2px 0',
+    flexDirection: 'row',
+    width: '100%',
+    top: '-22px',
+    '>span' : {
+        width: 'calc(100%/8)',
+        textAlign: 'center'
+    }
+});
+
+
+let ruleVerticalNumbers = css({
+    padding: '0 2px',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: -13,
+    height: '100%',
+    '>span' : {
+        height: 'calc(100% / 8)',
+        display: 'flex',
+        textAlign: 'center',
+        alignItems: 'center'
+    }
+});
