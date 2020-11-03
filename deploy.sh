@@ -1,6 +1,8 @@
 #!/bin/bash
+
+host=18.214.248.0
 echo "copying war files..."
-scp -i ~/.ssh/jda_ubuntuserver.pem target/*.war ubuntu@jda.danieldev.es:/home/ubuntu/tomcat/
+scp -i ~/.ssh/jdaec2.pem target/*.war ubuntu@$host:/home/ubuntu/tomcat/chessmasters.war
 
 echo "running tomcat in aws..."
-ssh -i ~/.ssh/jda_ubuntuserver.pem ubuntu@jda.danieldev.es 'sh /home/ubuntu/run_tomcat.sh'
+ssh -i ~/.ssh/jdaec2.pem ubuntu@$host 'sh /home/ubuntu/run_tomcat.sh'
