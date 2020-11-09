@@ -15,6 +15,7 @@ public class Match {
 	private static enum State {
 		WAITINGFORPLAYERS,
 		ONGOING,
+		ABANDONED,
 		FINISHED
 	}
 
@@ -25,10 +26,11 @@ public class Match {
 	private Player turn;
 	private Board board;
 
-	public Match() {
+	public Match(Board b) {
 		// generate a name automagically
 		name = TokenGenerator.generate(10);
 		status = State.WAITINGFORPLAYERS;
+		board = b;
 	}
 
 	public void changeTurn() {
@@ -51,6 +53,10 @@ public class Match {
 			blackPlayer = p;
 			shouldInitializeMatch();
 		}
+	}
+
+	public Board getBoard() {
+		return board;
 	}
 
 	private void shouldInitializeMatch() {

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { css } from 'glamor';
 // components
-import Board from './Board.js';
+import Match from './Match.js';
 import ErrorPanel from './ErrorPanel.js';
 import Loading from './Loading.js';
 // hooks
@@ -23,7 +23,7 @@ const App = function() {
             <Loading waitingRequest={loading}/>
             <p>Press SPACE or tap in place to cancel your move</p>
             <ApiContext.Provider value={{registerApiCall}}>
-                <Board />
+                <Match />
             </ApiContext.Provider>
         </div>
 	);

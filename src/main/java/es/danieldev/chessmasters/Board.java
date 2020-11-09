@@ -28,7 +28,8 @@ public class Board {
 	}
 
 	private void createBoard() {
-		setupRandomBoard();
+		setupStartField();
+		//setupRandomBoard();
 		//setupKnightTestingField();
 		//setupKingTestingField();
 		//setupRookTestingField();

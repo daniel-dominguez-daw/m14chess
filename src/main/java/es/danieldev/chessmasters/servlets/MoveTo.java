@@ -8,6 +8,7 @@ package es.danieldev.chessmasters.servlets;
 import com.google.gson.Gson;
 import es.danieldev.chessmasters.Board;
 import es.danieldev.chessmasters.BoardSlot;
+import es.danieldev.chessmasters.Match;
 import es.danieldev.chessmasters.pieces.Piece;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,23 +68,23 @@ public class MoveTo extends HttpServlet {
 		processRequest(request, response);
 		
 		ServletContext context = getServletContext();
-		Object o = context.getAttribute("gameboard");
+		Object o = context.getAttribute("match");
 		if(o == null) {
 			o = new Board();
-			context.setAttribute("gameboard", o);
+			context.setAttribute("match", o);
 		}
 		
-		Board b = (Board) o;
+		Match m = (Match) o;
 
 		int rowFrom = (int) Integer.parseInt(request.getParameter("rowFrom"));
 		int colFrom = (int) Integer.parseInt(request.getParameter("colFrom"));
 		int rowTo = (int) Integer.parseInt(request.getParameter("rowTo"));
 		int colTo = (int) Integer.parseInt(request.getParameter("colTo"));
 		BoardSlot slotFrom = new BoardSlot(rowFrom, colFrom);
-		Piece pieceToMove = b.getPiece(slotFrom);
+		Piece pieceToMove = m.getBoard().getPiece(slotFrom);
 		BoardSlot slotTo = new BoardSlot(rowTo, colTo);
 
-		if (b.isOutOfBounds(slotTo)) {
+		if (m.getBoard().isOutOfBounds(slotTo)) {
 			response.setStatus(406);// 406 Not Acceptable
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -117,7 +118,7 @@ public class MoveTo extends HttpServlet {
 			return;
 		}
 
-		final List<BoardSlot> slots = pieceToMove.possibleMoves(b);
+		final List<BoardSlot> slots = pieceToMove.possibleMoves(m.getBoard());
 		// check if our move is valid
 		if(! slots.contains(slotTo)){
 			// error invalid move there
@@ -140,11 +141,11 @@ public class MoveTo extends HttpServlet {
 		}
 
 		// put piece in the proper slot
-		b.movePiece(pieceToMove, slotFrom, slotTo);
+		m.getBoard().movePiece(pieceToMove, slotFrom, slotTo);
 
 		// check if that piece is in a transformable condition
 		HashMap<String, Object> jsonMap = new HashMap<>();
-		jsonMap.put("board", b);
+		jsonMap.put("match", m);
 		if (pieceToMove.canTransform()) {
 			jsonMap.put("transformPiece", pieceToMove);
 		} else {
