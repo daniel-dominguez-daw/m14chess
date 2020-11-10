@@ -2,8 +2,11 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { css, select as $ } from 'glamor';
 import { xs, sm, md } from '../utils/mediaquery.js';
-import Board from './Board.js';
 import axios from 'axios';
+
+import Board from './Board.js';
+import EmptyMatch from './EmptyMatch.js';
+import PlayerInfo from './PlayerInfo.js';
 
 import {ApiContext} from './App.js';
 
@@ -119,13 +122,37 @@ const Match = function(props) {
         updateMatchHandler();
     }, []);
 
-    return (
-        <>
-            <Board board={match.board} 
-                handleCellClick={handleCellClick} 
-                hightlightCells={hightlightCells} />
-        </>
-    );
+    const joinWhitePlayer = () => {
+        // @todo This should be performed on the server!!!
+        console.log("event joinWhitePlayer");
+        setMatch(Object.assign({
+            whitePlayer: {
+                name: 'Hardcoded WhiteP',
+                playingAs: 'WHITE'
+            }
+        }, match));
+    };
+
+    const joinBlackPlayer = () => {
+        // @todo This should be performed on the server!!!
+        console.log("event joinBlackPlayer");
+        setMatch(Object.assign({
+            blackPlayer: {
+                name: 'Dr Strange',
+                playingAs: 'BLACK'
+            },
+        }, match));
+    };
+
+    // manage match state
+    var render = renderState(match, {
+        joinWhitePlayer,
+        joinBlackPlayer,
+        handleCellClick,
+        hightlightCells
+    });
+
+    return render;
 }
 
 const cellIsEmpty = (cellPos, boardPieces) => {
@@ -134,6 +161,46 @@ const cellIsEmpty = (cellPos, boardPieces) => {
 
 const samePos = (posA, posB) => {
     return (posA.row == posB.row && posA.col == posB.col);
+};
+
+const renderState = (match, events) => {
+    const { joinWhitePlayer, joinBlackPlayer, handleCellClick, hightlightCells } = events;
+
+    switch(match.status) {
+        case 'WAITINGFORPLAYERS':
+            return <EmptyMatch whitePlayer={match.whitePlayer} blackPlayer={match.blackPlayer}
+                        joinWhitePlayer={joinWhitePlayer} joinBlackPlayer={joinBlackPlayer}/>;
+        case 'ONGOING':
+            return (
+                <>
+                    <div {...css({display: 'flex'})}>
+                        <PlayerInfo 
+                            name={match.whitePlayer.name} 
+                            playingAs={match.whitePlayer.playingAs}/>
+
+                        <PlayerInfo 
+                            name={match.blackPlayer.name} 
+                            playingAs={match.blackPlayer.playingAs}/>
+                    </div>
+
+                    <p>Press SPACE or tap in place to cancel your move</p>
+                    <div>
+                        <p>Player Turn</p>
+                        <PlayerInfo
+                            name={match.turn.name}
+                            playingAs={match.turn.playingAs}/>
+                    </div>
+                    <Board board={match.board} 
+                        handleCellClick={handleCellClick} 
+                        hightlightCells={hightlightCells} />
+                </>
+            )
+        case 'ABANDONED':
+            return "<b>abandoned</b>";
+        case 'FINISHED':
+            return "<b>finished</b>";
+    }
+    return null;
 };
 
 export default Match;

@@ -143,6 +143,9 @@ public class MoveTo extends HttpServlet {
 		// put piece in the proper slot
 		m.getBoard().movePiece(pieceToMove, slotFrom, slotTo);
 
+		// flip turn
+		m.changeTurn();
+
 		// check if that piece is in a transformable condition
 		HashMap<String, Object> jsonMap = new HashMap<>();
 		jsonMap.put("match", m);

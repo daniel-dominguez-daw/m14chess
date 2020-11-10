@@ -21,7 +21,6 @@ const App = function() {
         <div {...ruleApp}>
             { errorData && <ErrorPanel data={errorData} resetErrorHandler={resetErrorHandler} /> }
             <Loading waitingRequest={loading}/>
-            <p>Press SPACE or tap in place to cancel your move</p>
             <ApiContext.Provider value={{registerApiCall}}>
                 <Match />
             </ApiContext.Provider>

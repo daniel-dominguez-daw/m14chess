@@ -31,6 +31,10 @@ public class Match {
 		name = TokenGenerator.generate(10);
 		status = State.WAITINGFORPLAYERS;
 		board = b;
+
+		// this should be created by the user on api request
+		setBlackPlayer(new Player("Dr Strange"));
+		setWhitePlayer(new Player("Arale"));
 	}
 
 	public void changeTurn() {
