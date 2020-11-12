@@ -20,7 +20,7 @@ const useApi = function() {
                         }
                         setLoading(false);
                     });
-                }, 300);
+                }, 80);
             }
         }
     };

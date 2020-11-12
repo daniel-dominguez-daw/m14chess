@@ -127,7 +127,7 @@ const Match = function(props) {
         console.log("event joinWhitePlayer");
         setMatch(Object.assign({
             whitePlayer: {
-                name: 'Hardcoded WhiteP',
+                name: 'Mocked White',
                 playingAs: 'WHITE'
             }
         }, match));
@@ -138,7 +138,7 @@ const Match = function(props) {
         console.log("event joinBlackPlayer");
         setMatch(Object.assign({
             blackPlayer: {
-                name: 'Dr Strange',
+                name: 'Mocked Black',
                 playingAs: 'BLACK'
             },
         }, match));
@@ -183,13 +183,13 @@ const renderState = (match, events) => {
                             playingAs={match.blackPlayer.playingAs}/>
                     </div>
 
-                    <p>Press SPACE or tap in place to cancel your move</p>
                     <div>
                         <p>Player Turn</p>
                         <PlayerInfo
                             name={match.turn.name}
                             playingAs={match.turn.playingAs}/>
                     </div>
+                    <p>Press SPACE or tap in place to cancel your move</p>
                     <Board board={match.board} 
                         handleCellClick={handleCellClick} 
                         hightlightCells={hightlightCells} />

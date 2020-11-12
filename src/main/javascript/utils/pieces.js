@@ -113,5 +113,5 @@ const pieceRenderer = function(color, type) {
     return piece.renderImage();
 }
 
-export { Pawn, pieceRenderer };
+export { Pawn, King, pieceRenderer };
 
